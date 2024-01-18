@@ -1,5 +1,39 @@
 @import url("https://fonts.googleapis.com/css?family=Poppins:400,500,600,700&display=swap");
 
+:root {
+    --background-gradient: linear-gradient(115deg, #56d8e4 10%, #9f01ea 90%);
+    --gray: #34495e;
+    --darkgray: #4f4f4f;
+    --primary-color: #3366cc;
+    --header-background: #f0f0f0;
+    --header-hover-background: rgba(208, 208, 208, 0.8);
+    --header-home-background: #f0f0f0;
+    --header-home-hover-background: -webkit-linear-gradient(
+            right,
+            #56d8e4,
+            #9f01ea,
+            #56d8e4,
+            #9f01ea
+    );
+    --select-background: var(--darkgray);
+    --select-hover-color: #f39c12;
+    --priority-high-background: linear-gradient(
+            to right,
+            rgba(255, 0, 0, 0.8),
+            rgba(255, 0, 0, 0.5)
+    );
+    --priority-medium-background: linear-gradient(
+            to right,
+            rgba(255, 255, 0, 0.8),
+            rgba(255, 255, 0, 0.5)
+    );
+    --priority-low-background: linear-gradient(
+            to right,
+            rgba(0, 255, 0, 0.8),
+            rgba(0, 255, 0, 0.5)
+    );
+}
+
 * {
     margin: 0;
     padding: 0;
@@ -18,14 +52,22 @@
 .header {
     a:link,
     a:visited {
-        background-color: #f0f0f0;
+        background-color: var(--header-background);
         cursor: pointer;
+        color: var(--primary-color);
+        padding: 3px 10px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        border-radius: 5px;
+        transition: all 0.4s;
     }
 
     a:hover,
     a:active {
-        background-color: rgba(208, 208, 208, 0.8);
+        background-color: var(--header-hover-background);
         cursor: pointer;
+        transition: all 0.4s;
     }
 }
 
@@ -34,20 +76,14 @@
 
     a:link,
     a:visited {
-        background-color: #f0f0f0;
+        background-color: var(--header-home-background);
         cursor: pointer;
     }
 
     a:hover,
     a:active {
         cursor: pointer;
-        background: -webkit-linear-gradient(
-                right,
-                #56d8e4,
-                #9f01ea,
-                #56d8e4,
-                #9f01ea
-        );
+        background: var(--header-home-hover-background);
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
         transition: all 0.4s;
@@ -56,7 +92,7 @@
 
 a:link,
 a:visited {
-    color: #3366cc;
+    color: var(--primary-color);
     padding: 3px 10px;
     text-align: center;
     text-decoration: none;
@@ -68,7 +104,7 @@ a:visited {
 
 a:hover,
 a:active {
-    background-color: rgba(208, 208, 208, 0.8);
+    background-color: var(--header-hover-background);
     cursor: pointer;
     transition: all 0.4s;
 }
@@ -80,7 +116,7 @@ body {
     min-height: 100vh;
     padding: 10px;
     font-family: "Poppins", sans-serif;
-    background: linear-gradient(115deg, #56d8e4 10%, #9f01ea 90%);
+    background: var(--background-gradient);
 }
 
 .container {
@@ -92,12 +128,6 @@ body {
     border-radius: 25px;
 }
 
-:root {
-    --background-gradient: linear-gradient(178deg, #ffff33 10%, #3333ff);
-    --gray: #34495e;
-    --darkgray: #4f4f4f;
-}
-
 select {
     appearance: none;
     outline: 10px red;
@@ -106,7 +136,7 @@ select {
     flex: 1;
     padding: 0 1em;
     color: #fff;
-    background-color: var(--darkgray);
+    background-color: var(--select-background);
     background-image: none;
     cursor: pointer;
 }
@@ -135,7 +165,7 @@ select::-ms-expand {
 }
 
 .select:hover::after {
-    color: #f39c12;
+    color: var(--select-hover-color);
 }
 
 tr {
@@ -149,31 +179,19 @@ tr:nth-child(even) {
 }
 
 tr.priority-HIGH {
-    background: linear-gradient(
-            to right,
-            rgba(255, 0, 0, 0.8),
-            rgba(255, 0, 0, 0.5)
-    );
+    background: var(--priority-high-background);
     border-radius: 8px;
     transition: background 0.3s ease;
 }
 
 tr.priority-MEDIUM {
-    background: linear-gradient(
-            to right,
-            rgba(255, 255, 0, 0.8),
-            rgba(255, 255, 0, 0.5)
-    );
+    background: var(--priority-medium-background);
     border-radius: 8px;
     transition: background 0.3s ease;
 }
 
 tr.priority-LOW {
-    background: linear-gradient(
-            to right,
-            rgba(0, 255, 0, 0.8),
-            rgba(0, 255, 0, 0.5)
-    );
+    background: var(--priority-low-background);
     border-radius: 8px;
     transition: background 0.3s ease;
 }
@@ -362,7 +380,8 @@ form .form-row .textarea {
 
 .error {
     color: #ff0000;
-    margin-top: 10px;
+    font-size: small;
+    margin-top: auto;
 }
 
 .success {

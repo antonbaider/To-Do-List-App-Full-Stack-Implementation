@@ -1,16 +1,28 @@
-<!DOCTYPE html>
+<!doctype html>
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
-    <meta charset="UTF-8">
+    <meta charset="UTF-8" />
     <title>Error</title>
-    <link rel="stylesheet" th:href="@{/styles/main.css}"/>
+    <link rel="stylesheet" th:href="@{/styles/main.css}" />
 </head>
 <body>
 <div class="container">
     <div class="header-container">
         <div th:replace="header :: header"></div>
     </div>
-    <div class="text">Error: <p th:text="${error}"></p></div>
+    <div class="text">
+        Error
+        <pre th:text="${error}"></pre>
+    </div>
+    <div th:if="${#lists.isEmpty(constraintViolations) == false}">
+        <p>List of Constraint Violations:</p>
+        <ul>
+            <li
+                    th:each="error : ${constraintViolations}"
+                    th:text="${error.defaultMessage}"
+            ></li>
+        </ul>
+    </div>
 </div>
 </body>
 </html>
