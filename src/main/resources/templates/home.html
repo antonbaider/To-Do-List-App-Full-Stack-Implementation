@@ -3,8 +3,30 @@
 <head>
     <meta charset="UTF-8">
     <title>Home page</title>
+    <link rel="stylesheet" th:href="@{/styles/main.css}"/>
 </head>
 <body>
-
+<div class="container">
+    <div th:replace="header :: header"></div>
+    <div class="text">Welcome to awesome To-Do List!</div>
+    <table class="table">
+        <tr scope="row">
+            <th scope="col">No.</th>
+            <th scope="col">Id</th>
+            <th scope="col">Full name</th>
+            <th scope="col">E-mail</th>
+            <th colspan="2" scope="col">Operations</th>
+        </tr>
+        <tr scope="row" th:each="user, state : ${users}">
+            <td><b th:text="${state.count}"></b></td>
+            <td><a th:text="${user.id}" th:href="@{'/users/' + ${user.id} + '/read'}"></a></td>
+            <td><a th:text="${user.firstName + ' ' + user.lastName}" th:href="@{'todos/all/users/' + ${user.id}}">FullName</a>
+            </td>
+            <td th:text="${user.email}"></td>
+            <td><a th:href="@{'/users/' + ${user.id} + '/update'}">Edit</a></td>
+            <td><a th:href="@{'/users/' + ${user.id} + '/delete'}">Remove</a></td>
+        </tr>
+    </table>
+</div>
 </body>
 </html>

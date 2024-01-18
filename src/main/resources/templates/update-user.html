@@ -3,9 +3,72 @@
 <head>
     <meta charset="UTF-8">
     <title>Update User</title>
-    <link rel="stylesheet" th:href="@{/css/main.css}"/>
+    <link rel="stylesheet" th:href="@{/styles/main.css}"/>
 </head>
 <body>
+<div class="container">
 
+    <div th:replace="header :: header"></div>
+    <div class="text">Update Existing User</div>
+    <form method="POST" th:action="@{'/users/' + ${user.getId()} + '/update'}" th:object="${user}">
+        <div class="form-row">
+            <div class="input-data">
+                <input type="text" id="firstName" th:field="*{firstName}" required/>
+                <div class="underline"></div>
+                <label for="firstName">First Name:</label>
+            </div>
+            <div class="input-data">
+                <input type="text" id="lastName" th:field="*{lastName}" required/>
+                <div class="underline"></div>
+                <label for="lastName">Last Name:</label></div>
+        </div>
+        <div class="form-row">
+            <div class="input-data">
+                <input type="text" id="id" th:value="${user.getId()}" disabled/>
+                <div class="underline"></div>
+                <label for="id">Id:</label>
+            </div>
+            <div class="input-data">
+                <input type="email" id="email" th:field="*{email}" required/>
+                <div class="underline"></div>
+                <label for="email">Email:</label>
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="input-data">
+                <input th:field="*{password}" type="password" id="passwordOld" th:value="${user.getPassword()}" th:placeholder="${user.getPassword()}" disabled>
+                <div class="underline"></div>
+                <label for="passwordOld">Old password:</label>
+            </div>
+            <div class="input-data">
+                <input th:field="*{password}" type="password" id="password" >
+                <div class="underline"></div>
+                <label for="password">New password:</label>
+            </div>
+        </div>
+
+        <div class="form-row-role">
+             <label>Role:</label>
+        <label>
+            <select th:field="*{role}">
+                <option th:each="role : ${roles}" th:value="${role.getId()}"
+                        th:selected="${role.getId() == user.getId()}" th:text="${role.getName()}"></option>
+            </select>
+        </label>
+        </div>
+
+<div class="form-row submit-btn">
+    <div class="input-data">
+        <div class="inner"></div>
+        <input type="submit" value="Update">
+    </div>
+
+    <div class="input-data">
+        <div class="inner"></div>
+        <input type="reset" value="Clear">
+    </div>
+</div>
+</form>
+</div>
 </body>
 </html>
