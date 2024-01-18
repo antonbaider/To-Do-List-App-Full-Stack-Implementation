@@ -30,7 +30,7 @@
                    th:href="@{'todos/all/users/' + ${user.id}}"></a>
                 <label>
                     <select>
-                        <option th:selected="${user.role}" th:text="${user.role.getName()}"></option>
+                        <option th:selected="${user.role}" th:text="${user.role.getName()}" disabled></option>
                     </select>
                 </label>
             </td>

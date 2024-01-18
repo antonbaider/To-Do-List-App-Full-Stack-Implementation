@@ -7,6 +7,7 @@ import com.softserve.itacademy.service.UserService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 
 import java.util.List;
 
@@ -14,7 +15,6 @@ import java.util.List;
 @RequestMapping("/users")
 public class UserController {
     private final UserService userService;
-    //add needed fields
     private final RoleService roleService;
 
     public UserController(UserService userService, RoleService roleService) {
@@ -41,20 +41,28 @@ public class UserController {
 //    }
 
     @GetMapping("/{id}/update")
-    public String update(@PathVariable("id") long id,
-                         Model model) {
-        User user = userService.readById(id);
-        model.addAttribute("user", user);
-        List<Role> allRoles = roleService.getAll();
-        model.addAttribute("roles", allRoles);
-        return "update-user";
+    public String update(@PathVariable("id") long id, Model model) {
+        try {
+            User user = userService.readById(id);
+            model.addAttribute("user", user);
+            List<Role> allRoles = roleService.getAll();
+            model.addAttribute("roles", allRoles);
+            return "update-user";
+        } catch (Exception e) {
+            e.printStackTrace();
+            return "error";
+        }
     }
 
     @PostMapping("/{id}/update")
-    public String updateUser(@PathVariable("id") long id,
-                             @ModelAttribute("user") User updatedUser) {
-        userService.update(updatedUser);
-        return "redirect:/home";
+    public String updateUser(@PathVariable("id") long id, @ModelAttribute("user") User updatedUser) {
+        try {
+            userService.update(updatedUser);
+            return "redirect:/home";
+        } catch (Exception e) {
+            e.printStackTrace();
+            return "error";
+        }
     }
 //
 //
