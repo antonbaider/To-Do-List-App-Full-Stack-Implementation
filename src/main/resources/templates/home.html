@@ -26,7 +26,7 @@
         <tr scope="row" th:each="user, state : ${users}">
             <td><b th:text="${state.count}"></b></td>
             <td><a th:text="${user.id}" th:href="@{'/users/' + ${user.id} + '/read'}"></a></td>
-            <td><a th:text="${user.firstName + ' ' + user.lastName}"
+            <td class="fullname"><a th:text="${user.firstName + ' ' + user.lastName}"
                    th:href="@{'todos/all/users/' + ${user.id}}"></a>
                 <label>
                     <select>
@@ -34,7 +34,7 @@
                     </select>
                 </label>
             </td>
-            <td th:text="${user.email}"></td>
+            <td class="fullname" th:text="${user.email}"></td>
             <td><a th:href="@{'/users/' + ${user.id} + '/update'}">Edit</a></td>
             <td><a th:href="@{'/users/' + ${user.id} + '/delete'}">Remove</a></td>
         </tr>

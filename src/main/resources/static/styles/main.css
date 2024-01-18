@@ -210,6 +210,10 @@ tr:hover {
     text-align: center;
 }
 
+.fullname {
+    text-align: left;
+}
+
 .container .text {
     text-align: center;
     font-size: 41px;
