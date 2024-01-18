@@ -24,13 +24,14 @@
 
     a:hover,
     a:active {
-        background-color: rgba(166, 166, 166, 0.8);
+        background-color: rgba(208, 208, 208, 0.8);
         cursor: pointer;
     }
 }
 
 .header-home {
     text-align: right;
+
     a:link,
     a:visited {
         background-color: #f0f0f0;
@@ -50,7 +51,6 @@
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
         transition: all 0.4s;
-        background-color: rgba(166, 166, 166, 0.8);
     }
 }
 
@@ -68,7 +68,7 @@ a:visited {
 
 a:hover,
 a:active {
-    background-color: rgba(166, 166, 166, 0.8);
+    background-color: rgba(208, 208, 208, 0.8);
     cursor: pointer;
     transition: all 0.4s;
 }
@@ -84,9 +84,9 @@ body {
 }
 
 .container {
-    max-width: 800px;
+    max-width: 1100px;
     background: #fff;
-    width: 800px;
+    width: 900px;
     padding: 25px 40px 10px 40px;
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
     border-radius: 25px;
@@ -183,7 +183,7 @@ tr:hover {
 }
 
 .table {
-    max-width: 600px;
+    max-width: 700px;
     margin: auto;
     border-collapse: collapse;
     width: 100%;
@@ -227,12 +227,14 @@ form .form-row .input-data {
 form .form-row .textarea {
     height: 70px;
 }
+
 .form-row-role {
     display: flex;
     justify-content: center;
     align-items: center;
     flex-direction: column;
 }
+
 .input-data input,
 .textarea textarea {
     display: block;
