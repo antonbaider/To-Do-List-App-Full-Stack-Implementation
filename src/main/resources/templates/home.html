@@ -7,8 +7,14 @@
 </head>
 <body>
 <div class="container">
-    <div th:replace="header :: header"></div>
+    <div class="header-container">
+        <div th:replace="header :: header"></div>
+        <div class="header-home">
+            <a th:href="@{'/users/create'}">Create new User</a>
+           </div>
+    </div>
     <div class="text">List of Users</div>
+
     <table class="table">
         <tr scope="row">
             <th scope="col">No.</th>
