@@ -14,21 +14,47 @@
             th:action="@{'/users/' + ${user.getId()} + '/update'}"
             th:object="${user}"
     >
+        <div
+                class="error"
+                th:if="${#lists.isEmpty(constraintViolations) == false}"
+        >
+            <p>List of Constraint Violations:</p>
+            <ul>
+                <li
+                        th:each="error : ${constraintViolations}"
+                        th:text="${error.defaultMessage}"
+                ></li>
+            </ul>
+            <br />
+        </div>
+
         <div class="form-row">
             <div class="input-data">
                 <input
                         type="text"
                         id="firstName"
+                        name="firstName"
                         th:field="*{firstName}"
                         required
                 />
+
                 <div class="underline"></div>
-                <label for="firstName">First Name:</label>
+                <label for="firstName"
+                >First Name: <span class="error" th:errors="*{firstName}"></span
+                ></label>
             </div>
             <div class="input-data">
-                <input type="text" id="lastName" th:field="*{lastName}" required />
+                <input
+                        type="text"
+                        id="lastName"
+                        name="lastName"
+                        th:field="*{lastName}"
+                        required
+                />
                 <div class="underline"></div>
-                <label for="lastName">Last Name:</label>
+                <label for="lastName"
+                >Last Name: <span class="error" th:errors="*{lastName}"></span
+                ></label>
             </div>
         </div>
         <div class="form-row">
@@ -38,9 +64,17 @@
                 <label for="id">Id:</label>
             </div>
             <div class="input-data">
-                <input type="email" id="email" th:field="*{email}" required />
+                <input
+                        type="email"
+                        name="email"
+                        id="email"
+                        th:field="*{email}"
+                        required
+                />
                 <div class="underline"></div>
-                <label for="email">Email:</label>
+                <label for="email"
+                >Email: <span class="error" th:errors="*{email}"></span
+                ></label>
             </div>
         </div>
         <div class="form-row">
@@ -56,13 +90,22 @@
                 <div class="underline"></div>
                 <label for="passwordOld">Old password:</label>
             </div>
+
             <div class="input-data">
-                <input th:field="*{password}" type="password" id="password" />
+                <input
+                        th:field="*{password}"
+                        type="password"
+                        name="password"
+                        id="password"
+                        th:value="${user.getPassword()}"
+                        th:placeholder="${user.getPassword()}"
+                />
                 <div class="underline"></div>
-                <label for="password">New password:</label>
+                <label for="password"
+                >New password: <span class="error" th:errors="*{password}"></span
+                ></label>
             </div>
         </div>
-
         <div class="form-row-role">
             <label>Role:</label>
             <label>

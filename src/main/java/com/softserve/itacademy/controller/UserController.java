@@ -6,9 +6,10 @@ import com.softserve.itacademy.service.RoleService;
 import com.softserve.itacademy.service.UserService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.ModelAndView;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @Controller
@@ -42,27 +43,25 @@ public class UserController {
 
     @GetMapping("/{id}/update")
     public String update(@PathVariable("id") long id, Model model) {
-        try {
-            User user = userService.readById(id);
-            model.addAttribute("user", user);
-            List<Role> allRoles = roleService.getAll();
-            model.addAttribute("roles", allRoles);
-            return "update-user";
-        } catch (Exception e) {
-            e.printStackTrace();
-            return "error";
-        }
+        User user = userService.readById(id);
+        model.addAttribute("user", user);
+        List<Role> allRoles = roleService.getAll();
+        model.addAttribute("roles", allRoles);
+        return "update-user";
+
     }
 
     @PostMapping("/{id}/update")
-    public String updateUser(@PathVariable("id") long id, @ModelAttribute("user") User updatedUser) {
-        try {
-            userService.update(updatedUser);
-            return "redirect:/home";
-        } catch (Exception e) {
-            e.printStackTrace();
-            return "error";
+    public String updateUser(@PathVariable("id") long id, @Valid @ModelAttribute("user") User updatedUser, BindingResult bindingResult, Model model) {
+        if (bindingResult.hasErrors()) {
+            model.addAttribute("constraintViolations", bindingResult.getFieldErrors());
+            model.addAttribute("user", updatedUser);
+            List<Role> allRoles = roleService.getAll();
+            model.addAttribute("roles", allRoles);
+            return "update-user";
         }
+        userService.update(updatedUser);
+        return "redirect:/home";
     }
 //
 //

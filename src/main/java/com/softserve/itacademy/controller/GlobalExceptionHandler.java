@@ -1,16 +1,40 @@
 package com.softserve.itacademy.controller;
 
+
+
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.servlet.ModelAndView;
 
-@ControllerAdvice
-public class GlobalExceptionHandler {
+import javax.validation.ConstraintViolation;
+import javax.validation.ConstraintViolationException;
+import java.util.Set;
 
-    @ExceptionHandler(Exception.class)
-    public ModelAndView handleException(Exception ex) {
-        ModelAndView modelAndView = new ModelAndView("error");
-        modelAndView.addObject("error", ex);
-        return modelAndView;
+    @ControllerAdvice
+    public class GlobalExceptionHandler {
+
+        @ExceptionHandler(ConstraintViolationException.class)
+        public String handleConstraintViolationException(ConstraintViolationException ex, Model model) {
+            // Log the exception
+            ex.printStackTrace();
+
+            // Extract the list of ConstraintViolation objects
+            Set<ConstraintViolation<?>> constraintViolations = ex.getConstraintViolations();
+
+            // Add the list of ConstraintViolation objects to the model
+            model.addAttribute("constraintViolations", constraintViolations);
+
+            // Return the error template
+            return "error";
+        }
+
+        // Handle other exceptions if needed
+        @ExceptionHandler(Exception.class)
+        public String handleException(Exception ex, Model model) {
+            // Log the exception
+            ex.printStackTrace();
+
+            // Return the error template
+            return "error";
+        }
     }
-}
