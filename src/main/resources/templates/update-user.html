@@ -18,7 +18,7 @@
                 class="error"
                 th:if="${#lists.isEmpty(constraintViolations) == false}"
         >
-            <p>List of Constraint Violations:</p>
+            <p>⚠️List of Constraint Violations:</p>
             <ul>
                 <li
                         th:each="error : ${constraintViolations}"

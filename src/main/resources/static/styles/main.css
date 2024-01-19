@@ -392,3 +392,43 @@ form .form-row .textarea {
     color: green;
     font-weight: bold;
 }
+
+.search-container {
+    position: relative;
+    display: inline-block;
+    padding-bottom: 27px;
+}
+
+.search-input {
+    width: 250px;
+    height: 32px;
+    padding: 12px;
+    background-color: #dddddd;
+    border: 2px solid #ddd;
+    border-radius: 5px;
+    font-size: 16px;
+    transition: border-color 0.3s ease;
+    outline: none;
+}
+
+.search-icon {
+    position: absolute;
+    top: 53%;
+    right: 10px;
+    transform: translateY(-50%);
+    background-color: rgba(255, 255, 255, 0.01);
+    color: #adacac;
+    border: none;
+    padding: 8px 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.search-input:hover,
+.search-input:focus {
+    border-color: #adacac;
+}
+
+.search-icon:hover {
+    background-color: rgba(255, 255, 255, 0.01);
+}

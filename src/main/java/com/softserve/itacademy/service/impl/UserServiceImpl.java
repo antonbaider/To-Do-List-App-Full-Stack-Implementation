@@ -46,5 +46,7 @@ public class UserServiceImpl implements UserService {
         List<User> users = userRepository.findAll();
         return users.isEmpty() ? new ArrayList<>() : users;
     }
-
+    public List<User> searchUsersByName(String userName) {
+        return userRepository.findByFirstNameContainingIgnoreCaseOrLastNameContainingIgnoreCase(userName, userName);
+    }
 }
