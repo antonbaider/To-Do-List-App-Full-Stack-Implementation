@@ -1,8 +1,12 @@
 package com.softserve.itacademy.service.impl;
 
+import com.softserve.itacademy.model.Task;
 import com.softserve.itacademy.model.ToDo;
+import com.softserve.itacademy.model.User;
 import com.softserve.itacademy.repository.ToDoRepository;
+import com.softserve.itacademy.service.TaskService;
 import com.softserve.itacademy.service.ToDoService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -51,5 +55,10 @@ public class ToDoServiceImpl implements ToDoService {
     public List<ToDo> getByUserId(long userId) {
         List<ToDo> todos = todoRepository.getByUserId(userId);
         return todos.isEmpty() ? new ArrayList<>() : todos;
+    }
+
+    @Override
+    public boolean removeCollaborator(long todoId, long collaboratorId) {
+        return false;
     }
 }

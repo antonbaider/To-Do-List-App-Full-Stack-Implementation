@@ -85,7 +85,7 @@
             ></td>
             <td
                     class="fullName"
-                    th:text="${todo.getOwner().getFirstName() + todo.getOwner().getLastName()}"
+                    th:text="${todo.getOwner().getFirstName() + ' ' + todo.getOwner().getLastName()}"
             ></td>
             <td>
                 <a

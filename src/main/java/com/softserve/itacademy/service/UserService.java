@@ -11,4 +11,6 @@ public interface UserService {
     void delete(long id);
     List<User> getAll();
     List<User> searchUsersByName(String userName);
+    void removeCollaborator(long todoId, long collaboratorId);
+    void addCollaborator(long todoId, long collaboratorId);
 }

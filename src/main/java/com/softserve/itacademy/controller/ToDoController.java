@@ -3,18 +3,14 @@ package com.softserve.itacademy.controller;
 import com.softserve.itacademy.model.Task;
 import com.softserve.itacademy.model.ToDo;
 import com.softserve.itacademy.model.User;
-import com.softserve.itacademy.service.RoleService;
 import com.softserve.itacademy.service.TaskService;
 import com.softserve.itacademy.service.ToDoService;
 import com.softserve.itacademy.service.UserService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
-import java.text.SimpleDateFormat;
 import java.util.List;
 
 @Controller
@@ -48,7 +44,8 @@ public class ToDoController {
         model.addAttribute("users", userService.getAll());
         return "todo-tasks";
     }
-//
+
+    //
 //    @GetMapping("/{todo_id}/update/users/{owner_id}")
 //    public String update(//add needed parameters) {
 //        //ToDo
@@ -61,12 +58,13 @@ public class ToDoController {
 //        return " ";
 //    }
 //
-//    @GetMapping("/{todo_id}/delete/users/{owner_id}")
-//    public String delete(//add needed parameters) {
-//                         // ToDo
-//        return " ";
-//    }
-//
+    @GetMapping("/{todo_id}/delete/users/{owner_id}")
+    public String delete(@PathVariable("todo_id") long todoId,
+                         @PathVariable("owner_id") long ownerId) {
+        toDoService.delete(todoId);
+        return "redirect:/todos/all/users/" + ownerId;
+    }
+
     @GetMapping("/all/users/{user_id}")
     public String getAll(@PathVariable("user_id") long userId, Model model) {
         User user = userService.readById(userId);
@@ -75,16 +73,19 @@ public class ToDoController {
         model.addAttribute("todos", toDos);
         return "todos-user";
     }
-//
-//    @GetMapping("/{id}/add")
-//    public String addCollaborator(//add needed parameters) {
-//        //ToDo
-//        return " ";
-//    }
-//
-//    @GetMapping("/{id}/remove")
-//    public String removeCollaborator(//add needed parameters) {
-//        //ToDo
-//        return " ";
-//    }
+
+    @PostMapping("/{todo_id}/add/")
+    public String addCollaborator(@PathVariable("todo_id") long todoId,
+                                  @RequestParam("collaboratorId") long collaboratorId,
+                                  Model model) {
+        userService.addCollaborator(todoId, collaboratorId);
+        return "redirect:/todos/" + todoId + "/tasks";
+    }
+
+    @GetMapping("/{todo_id}/remove/{collaborator_id}")
+    public String removeCollaborator(@PathVariable("todo_id") long todoId,
+                                     @PathVariable("collaborator_id") long collaboratorId, Model model) {
+        userService.removeCollaborator(todoId, collaboratorId);
+        return "redirect:/todos/" + todoId + "/tasks";
+    }
 }
