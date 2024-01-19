@@ -35,11 +35,14 @@ public class UserController {
 //        return " ";
 //    }
 //
-//    @GetMapping("/{id}/read")
-//    public String read(//add needed parameters) {
-//        //ToDo
-//        return " ";
-//    }
+    @GetMapping("/{id}/read")
+    public String read(@PathVariable("id") long id, Model model) {
+        User user = userService.readById(id);
+        model.addAttribute("user", user);
+        List<Role> allRoles = roleService.getAll();
+        model.addAttribute("roles", allRoles);
+        return "user-info";
+    }
 
     @GetMapping("/{id}/update")
     public String update(@PathVariable("id") long id, Model model) {
@@ -64,14 +67,12 @@ public class UserController {
         return "redirect:/home";
     }
 
+    @GetMapping("/{id}/delete")
+    public String delete(@PathVariable("id") long id) {
+        userService.delete(id);
+        return "redirect:/home";
+    }
 
-//
-//
-//    @GetMapping("/{id}/delete")
-//    public String delete(//add needed parameters) {
-//        //ToDo
-//        return " ";
-//    }
 //
 //    @GetMapping("/all")
 //    public String getAll(//add needed parameters) {

@@ -1,10 +1,95 @@
-<!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <title>User Info</title>
+    <meta charset="UTF-8" />
+    <title>Update User</title>
+    <link rel="stylesheet" th:href="@{/styles/main.css}" />
 </head>
 <body>
+<div class="container">
+    <div class="header-container">
+        <div th:replace="header :: header"></div>
+        <div class="header">
+            <a class="action-link" th:href="@{'/users/' + ${user.id} + '/update'}"
+            >Edit</a
+            >
+            <a class="action-link" th:href="@{'/users/' + ${user.id} + '/delete'}"
+            >Delete</a
+            >
+        </div>
+    </div>
+    <div class="text">User Info</div>
+    <form th:object="${user}">
+        <div class="form-row">
+            <div class="input-data">
+                <input
+                        type="text"
+                        id="firstName"
+                        name="firstName"
+                        th:field="*{firstName}"
+                        disabled
+                />
 
+                <div class="underline"></div>
+                <label for="firstName">First Name:</label>
+            </div>
+            <div class="input-data">
+                <input
+                        type="text"
+                        id="lastName"
+                        name="lastName"
+                        th:field="*{lastName}"
+                        disabled
+                />
+                <div class="underline"></div>
+                <label for="lastName">Last Name:</label>
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="input-data">
+                <input type="text" id="id" th:value="${user.getId()}" disabled />
+                <div class="underline"></div>
+                <label for="id">Id:</label>
+            </div>
+            <div class="input-data">
+                <input
+                        type="email"
+                        name="email"
+                        id="email"
+                        th:field="*{email}"
+                        disabled
+                />
+                <div class="underline"></div>
+                <label for="email">Email:</label>
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="input-data">
+                <input
+                        th:field="*{password}"
+                        type="text"
+                        id="password"
+                        th:value="${user.getPassword()}"
+                        th:placeholder="${user.getPassword()}"
+                        disabled
+                />
+                <div class="underline"></div>
+                <label for="password">Password:</label>
+            </div>
+            <div class="input-data">
+                <input
+                        th:field="*{role}"
+                        type="role"
+                        id="role"
+                        th:value="${user.role.getName()}"
+                        th:placeholder="${user.role.getName()}"
+                        disabled
+                />
+                <div class="underline"></div>
+                <label for="role">Role:</label>
+            </div>
+        </div>
+    </form>
+</div>
 </body>
 </html>

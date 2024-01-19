@@ -446,3 +446,28 @@ form .form-row .textarea {
 .search-icon button:hover {
     background-color: var(--background-search-color);
 }
+
+.action-link {
+    display: flex;
+    margin: auto;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    transition: color 0.3s;
+}
+
+.icon {
+    fill: none;
+    margin: auto;
+    stroke: currentColor;
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    width: 20px;
+    height: 20px;
+    transition: transform 0.3s;
+}
+
+.action-link:hover {
+    color: var(--input-data);
+}
