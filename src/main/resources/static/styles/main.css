@@ -32,6 +32,15 @@
             rgba(0, 255, 0, 0.8),
             rgba(0, 255, 0, 0.5)
     );
+    --boreder-search: #ddd;
+    --search-color: #adacac;
+    --background-search-color: #ffffff;
+    --input-data: #3498db;
+    --error-color: red;
+    --violation-border-color: #ff6666;
+    --violation-background-color: #ffe6e6;
+    --violation-hover-border-color: #cc0000;
+    --violation-hover-background-color: #ffcccc;
 }
 
 * {
@@ -121,7 +130,7 @@ body {
 
 .container {
     max-width: 1100px;
-    background: #fff;
+    background: var(--background-search-color);
     width: 900px;
     padding: 25px 40px 10px 40px;
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
@@ -130,12 +139,12 @@ body {
 
 select {
     appearance: none;
-    outline: 10px red;
+    outline: 10px var(--priority-high-background);
     border: 0;
     box-shadow: none;
     flex: 1;
     padding: 0 1em;
-    color: #fff;
+    color: var(--background-search-color);
     background-color: var(--select-background);
     background-image: none;
     cursor: pointer;
@@ -173,7 +182,7 @@ tr {
 }
 
 tr:nth-child(even) {
-    background: #f0f0f0;
+    background: var(--header-background);
     border-radius: 8px;
     transition: background 0.3s ease;
 }
@@ -210,7 +219,7 @@ tr:hover {
     text-align: center;
 }
 
-.fullname {
+.fullName {
     text-align: left;
 }
 
@@ -219,13 +228,7 @@ tr:hover {
     font-size: 41px;
     font-weight: 600;
     font-family: "Poppins", sans-serif;
-    background: -webkit-linear-gradient(
-            right,
-            #56d8e4,
-            #9f01ea,
-            #56d8e4,
-            #9f01ea
-    );
+    background: var(--header-home-hover-background);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
 }
@@ -275,7 +278,7 @@ form .form-row .textarea {
 .textarea textarea:disabled ~ label {
     transform: translateY(-20px);
     font-size: 14px;
-    color: #3498db;
+    color: var(--input-data);
 }
 
 .textarea textarea {
@@ -294,7 +297,7 @@ form .form-row .textarea {
 .textarea label {
     width: 100%;
     bottom: 40px;
-    background: #fff;
+    background: var(--background-search-color);
 }
 
 .input-data .underline {
@@ -309,7 +312,7 @@ form .form-row .textarea {
     content: "";
     height: 2px;
     width: 100%;
-    background: #3498db;
+    background: var(--input-data);
     transform: scaleX(0);
     transform-origin: center;
     transition: transform 0.3s ease;
@@ -333,13 +336,7 @@ form .form-row .textarea {
     width: 300%;
     position: absolute;
     left: -100%;
-    background: -webkit-linear-gradient(
-            right,
-            #56d8e4,
-            #9f01ea,
-            #56d8e4,
-            #9f01ea
-    );
+    background: var(--header-home-hover-background);
     transition: all 0.4s;
 }
 
@@ -350,7 +347,7 @@ form .form-row .textarea {
 .submit-btn .input-data input {
     background: none;
     border: none;
-    color: #fff;
+    color: var(--background-search-color);
     font-size: 17px;
     font-weight: 500;
     text-transform: uppercase;
@@ -383,13 +380,29 @@ form .form-row .textarea {
 }
 
 .error {
-    color: #ff0000;
+    color: var(--error-color);
     font-size: small;
-    margin-top: auto;
+}
+.violations {
+    margin: auto;
+    font-size: medium;
+    padding: 25px;
+    border: 2px solid var(--violation-border-color);
+    border-radius: 5px;
+    color: var(--violation-border-color);
+    background-color: var(--violation-background-color);
+    transition:
+            border-color 0.3s,
+            background-color 0.3s;
+}
+
+.violations:hover {
+    border-color: var(--violation-hover-border-color);
+    background-color: var(--violation-hover-background-color);
 }
 
 .success {
-    color: green;
+    color: var(--priority-low-background);
     font-weight: bold;
 }
 
@@ -403,8 +416,8 @@ form .form-row .textarea {
     width: 250px;
     height: 32px;
     padding: 12px;
-    background-color: #dddddd;
-    border: 2px solid #ddd;
+    background-color: var(--header-background);
+    border: 2px solid var(--boreder-search);
     border-radius: 5px;
     font-size: 16px;
     transition: border-color 0.3s ease;
@@ -417,7 +430,7 @@ form .form-row .textarea {
     right: 10px;
     transform: translateY(-50%);
     background-color: rgba(255, 255, 255, 0.01);
-    color: #adacac;
+    color: var(--boreder-search);
     border: none;
     padding: 8px 16px;
     cursor: pointer;
@@ -426,9 +439,10 @@ form .form-row .textarea {
 
 .search-input:hover,
 .search-input:focus {
-    border-color: #adacac;
+    border-color: var(--search-color);
+    background-color: var(--background-search-color);
 }
 
-.search-icon:hover {
-    background-color: rgba(255, 255, 255, 0.01);
+.search-icon button:hover {
+    background-color: var(--background-search-color);
 }

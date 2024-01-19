@@ -15,7 +15,7 @@
             th:object="${user}"
     >
         <div
-                class="error"
+                class="error violations"
                 th:if="${#lists.isEmpty(constraintViolations) == false}"
         >
             <p>⚠️List of Constraint Violations:</p>
@@ -25,7 +25,6 @@
                         th:text="${error.defaultMessage}"
                 ></li>
             </ul>
-            <br />
         </div>
 
         <div class="form-row">

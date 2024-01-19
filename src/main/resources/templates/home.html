@@ -1,28 +1,34 @@
-<!DOCTYPE html>
+<!doctype html>
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
-    <meta charset="UTF-8">
+    <meta charset="UTF-8" />
     <title>Home page</title>
-    <link rel="stylesheet" th:href="@{/styles/main.css}"/>
+    <link rel="stylesheet" th:href="@{/styles/main.css}" />
 </head>
 <body>
 <div class="container">
     <div class="header-container">
         <div th:replace="header :: header"></div>
-        <div class="search-container">  <form action="/search" method="get">
-            <label>
-                <input type="text" class="search-input" name="userName" placeholder="Search by name">
-            </label>
-            <button type="submit" class="search-icon">GO</button>
-       </form>
-    </div>
+        <div class="search-container">
+            <form action="/search" method="get">
+                <label>
+                    <input
+                            type="text"
+                            class="search-input"
+                            name="userName"
+                            placeholder="Search by name"
+                    />
+                </label>
+                <button type="submit" class="search-icon">GO</button>
+            </form>
+        </div>
         <div class="header-home">
             <a th:href="@{'/users/create'}">Create new User</a>
         </div>
     </div>
-    <div class="text">List of Users</div>
-
-    <table class="table"><thead th:if="${not #lists.isEmpty(users)}">
+    <div class="text" th:if="${not #lists.isEmpty(users)}">List of Users</div>
+    <table class="table">
+        <thead th:if="${not #lists.isEmpty(users)}">
         <tr scope="row">
             <th scope="col">No.</th>
             <th scope="col">Id</th>
@@ -30,25 +36,41 @@
             <th scope="col">E-mail</th>
             <th colspan="2" scope="col">Operations</th>
         </tr>
-    </thead>
+        </thead>
         <tbody>
         <tr th:if="${#lists.isEmpty(users)}">
-            <td colspan="6"><div class="text">No users found.</div></td>
+            <td colspan="6">
+                <div class="text">No users found</div>
+            </td>
         </tr>
         <tr scope="row" th:each="user, state : ${users}">
             <td><b th:text="${state.count}"></b></td>
-            <td><a th:text="${user.id}" th:href="@{'/users/' + ${user.id} + '/read'}"></a></td>
-            <td class="fullname"><a th:text="${user.firstName + ' ' + user.lastName}"
-                   th:href="@{'todos/all/users/' + ${user.id}}"></a>
+            <td>
+                <a
+                        th:text="${user.id}"
+                        th:href="@{'/users/' + ${user.id} + '/read'}"
+                ></a>
+            </td>
+            <td class="fullName">
+                <a
+                        th:text="${user.firstName + ' ' + user.lastName}"
+                        th:href="@{'todos/all/users/' + ${user.id}}"
+                ></a>
                 <label>
                     <select>
-                        <option th:selected="${user.role}" th:text="${user.role.getName()}" disabled></option>
+                        <option
+                                th:selected="${user.role}"
+                                th:text="${user.role.getName()}"
+                                disabled
+                        ></option>
                     </select>
                 </label>
             </td>
-            <td class="fullname" th:text="${user.email}"></td>
+            <td class="fullName" th:text="${user.email}"></td>
             <td><a th:href="@{'/users/' + ${user.id} + '/update'}">Edit</a></td>
-            <td><a th:href="@{'/users/' + ${user.id} + '/delete'}">Remove</a></td>
+            <td>
+                <a th:href="@{'/users/' + ${user.id} + '/delete'}">Remove</a>
+            </td>
         </tr>
         </tbody>
     </table>
