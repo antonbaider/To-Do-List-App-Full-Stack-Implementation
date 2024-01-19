@@ -9,8 +9,10 @@ import com.softserve.itacademy.service.UserService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @Controller
@@ -45,19 +47,53 @@ public class ToDoController {
         return "todo-tasks";
     }
 
-    //
-//    @GetMapping("/{todo_id}/update/users/{owner_id}")
-//    public String update(//add needed parameters) {
-//        //ToDo
-//        return " ";
-//    }
-//
+
+    @GetMapping("/{todo_id}/update/users/{owner_id}")
+    public String update(@PathVariable("todo_id") long todoId,
+                         @PathVariable("owner_id") long ownerId,
+                         Model model
+    ) {
+        ToDo toDo = toDoService.readById(todoId);
+        model.addAttribute("todoUpdate", toDo);
+        return "update-todo";
+    }
+
 //    @PostMapping("/{todo_id}/update/users/{owner_id}")
-//    public String update(//add needed parameters) {
-//        //ToDo
-//        return " ";
+//    public String update(@PathVariable("todo_id") long todoId,
+//                         @PathVariable("owner_id") long ownerId, Model model, BindingResult bindingResult, @Valid @ModelAttribute("title") ToDo updatedToDo) {
+//        if (bindingResult.hasErrors()) {
+//            ToDo toDo = toDoService.readById(todoId);
+//            model.addAttribute("todoUpdate", toDo);
+//            return "update-todo";
+//        }
+//        User owner = userService.readById(ownerId);
+//        ToDo toDo = toDoService.readById(todoId);
+//        toDoService.update(toDo);
+//        return "redirect:/todos/all/users/" + ownerId;
 //    }
-//
+@PostMapping("/{todo_id}/update/users/{owner_id}")
+public String update(@PathVariable("todo_id") long todoId,
+                     @PathVariable("owner_id") long ownerId,
+                     @Valid @ModelAttribute("todoUpdate") ToDo updatedToDo,
+                     BindingResult bindingResult,
+                     Model model) {
+    if (bindingResult.hasErrors()) {
+        ToDo toDo = toDoService.readById(todoId);
+        model.addAttribute("todoUpdate", toDo);
+        return "update-todo";
+    }
+    User owner = userService.readById(ownerId);
+    ToDo toDo = toDoService.readById(todoId);
+
+    // Update ToDo object with the new data
+    toDo.setTitle(updatedToDo.getTitle());
+    // Add more fields as needed
+
+    toDoService.update(toDo);
+    return "redirect:/todos/all/users/" + ownerId;
+}
+
+
     @GetMapping("/{todo_id}/delete/users/{owner_id}")
     public String delete(@PathVariable("todo_id") long todoId,
                          @PathVariable("owner_id") long ownerId) {
