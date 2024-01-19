@@ -24,18 +24,37 @@ public class ToDoController {
     private final ToDoService toDoService;
     private final TaskService taskService;
 
-    //    @GetMapping("/create/users/{owner_id}")
-//    public String create(//add needed parameters) {
-//        //ToDo
-//        return " ";
-//    }
-//
-//    @PostMapping("/create/users/{owner_id}")
-//    public String create(//add needed parameters) {
-//        //ToDo
-//        return " ";
-//    }
-//
+    @GetMapping("/create/users/{owner_id}")
+    public String create(@PathVariable("owner_id") long ownerId,
+                         Model model) {
+        User user = userService.readById(ownerId);
+        ToDo toDo = new ToDo();
+        model.addAttribute("todo", toDo);
+        model.addAttribute("ownerName", user.getFirstName() + ' ' + user.getLastName());
+        model.addAttribute("owner", user);
+        return "create-todo";
+    }
+
+    @PostMapping("/create/users/{owner_id}")
+    public String create(@PathVariable("owner_id") long ownerId,
+                         @ModelAttribute("todo") @Valid ToDo toDo,
+                         BindingResult bindingResult,
+                         Model model) {
+        if (bindingResult.hasErrors()) {
+            model.addAttribute("constraintViolations", bindingResult.getFieldErrors());
+            User user = userService.readById(ownerId);
+            model.addAttribute("todo", toDo);
+            model.addAttribute("ownerName", user.getFirstName() + ' ' + user.getLastName());
+            model.addAttribute("owner", user);
+            return "create-todo";
+        }
+        User owner = userService.readById(ownerId);
+        toDo.setOwner(owner);
+                toDoService.create(toDo);
+
+        return "redirect:/todos/all/users/" + ownerId;
+    }
+
     @GetMapping("/{id}/tasks")
     public String read(@PathVariable("id") long todoId, Model model) {
         List<Task> tasks = taskService.getByTodoId(todoId);
@@ -47,56 +66,30 @@ public class ToDoController {
         return "todo-tasks";
     }
 
-
     @GetMapping("/{todo_id}/update/users/{owner_id}")
-    public String update(@PathVariable("todo_id") long todoId,
-                         @PathVariable("owner_id") long ownerId,
-                         Model model
-    ) {
+    public String update(@PathVariable("todo_id") long todoId, @PathVariable("owner_id") long ownerId, Model model) {
         ToDo toDo = toDoService.readById(todoId);
         model.addAttribute("todoUpdate", toDo);
         return "update-todo";
     }
 
-//    @PostMapping("/{todo_id}/update/users/{owner_id}")
-//    public String update(@PathVariable("todo_id") long todoId,
-//                         @PathVariable("owner_id") long ownerId, Model model, BindingResult bindingResult, @Valid @ModelAttribute("title") ToDo updatedToDo) {
-//        if (bindingResult.hasErrors()) {
-//            ToDo toDo = toDoService.readById(todoId);
-//            model.addAttribute("todoUpdate", toDo);
-//            return "update-todo";
-//        }
-//        User owner = userService.readById(ownerId);
-//        ToDo toDo = toDoService.readById(todoId);
-//        toDoService.update(toDo);
-//        return "redirect:/todos/all/users/" + ownerId;
-//    }
-@PostMapping("/{todo_id}/update/users/{owner_id}")
-public String update(@PathVariable("todo_id") long todoId,
-                     @PathVariable("owner_id") long ownerId,
-                     @Valid @ModelAttribute("todoUpdate") ToDo updatedToDo,
-                     BindingResult bindingResult,
-                     Model model) {
-    if (bindingResult.hasErrors()) {
+    @PostMapping("/{todo_id}/update/users/{owner_id}")
+    public String update(@PathVariable("todo_id") long todoId, @PathVariable("owner_id") long ownerId, @Valid @ModelAttribute("todoUpdate") ToDo updatedToDo, BindingResult bindingResult, Model model) {
+        if (bindingResult.hasErrors()) {
+            ToDo toDo = toDoService.readById(todoId);
+            model.addAttribute("constraintViolations", bindingResult.getFieldErrors());
+            model.addAttribute("todoUpdate", toDo);
+            return "update-todo";
+        }
+        User owner = userService.readById(ownerId);
         ToDo toDo = toDoService.readById(todoId);
-        model.addAttribute("todoUpdate", toDo);
-        return "update-todo";
+        toDo.setTitle(updatedToDo.getTitle());
+        toDoService.update(toDo);
+        return "redirect:/todos/all/users/" + ownerId;
     }
-    User owner = userService.readById(ownerId);
-    ToDo toDo = toDoService.readById(todoId);
-
-    // Update ToDo object with the new data
-    toDo.setTitle(updatedToDo.getTitle());
-    // Add more fields as needed
-
-    toDoService.update(toDo);
-    return "redirect:/todos/all/users/" + ownerId;
-}
-
 
     @GetMapping("/{todo_id}/delete/users/{owner_id}")
-    public String delete(@PathVariable("todo_id") long todoId,
-                         @PathVariable("owner_id") long ownerId) {
+    public String delete(@PathVariable("todo_id") long todoId, @PathVariable("owner_id") long ownerId) {
         toDoService.delete(todoId);
         return "redirect:/todos/all/users/" + ownerId;
     }
@@ -111,16 +104,13 @@ public String update(@PathVariable("todo_id") long todoId,
     }
 
     @PostMapping("/{todo_id}/add/")
-    public String addCollaborator(@PathVariable("todo_id") long todoId,
-                                  @RequestParam("collaboratorId") long collaboratorId,
-                                  Model model) {
+    public String addCollaborator(@PathVariable("todo_id") long todoId, @RequestParam("collaboratorId") long collaboratorId, Model model) {
         userService.addCollaborator(todoId, collaboratorId);
         return "redirect:/todos/" + todoId + "/tasks";
     }
 
     @GetMapping("/{todo_id}/remove/{collaborator_id}")
-    public String removeCollaborator(@PathVariable("todo_id") long todoId,
-                                     @PathVariable("collaborator_id") long collaboratorId, Model model) {
+    public String removeCollaborator(@PathVariable("todo_id") long todoId, @PathVariable("collaborator_id") long collaboratorId, Model model) {
         userService.removeCollaborator(todoId, collaboratorId);
         return "redirect:/todos/" + todoId + "/tasks";
     }

@@ -3,6 +3,7 @@ package com.softserve.itacademy.model;
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Set;
@@ -14,7 +15,8 @@ public class ToDo {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @NotBlank(message = "The 'title' cannot be empty")
+    @NotBlank(message = "Cannot be empty")
+    @Size(min = 3, message = "Must be at least 3 characters long")
     @Column(name = "title", nullable = false, unique = true)
     private String title;
 
@@ -35,6 +37,7 @@ public class ToDo {
     private List<User> collaborators;
 
     public ToDo() {
+        this.createdAt = LocalDateTime.now();
     }
 
     public long getId() {
