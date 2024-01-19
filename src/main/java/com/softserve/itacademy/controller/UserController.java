@@ -4,6 +4,7 @@ import com.softserve.itacademy.model.Role;
 import com.softserve.itacademy.model.User;
 import com.softserve.itacademy.service.RoleService;
 import com.softserve.itacademy.service.UserService;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -13,28 +14,33 @@ import javax.validation.Valid;
 import java.util.List;
 
 @Controller
+@AllArgsConstructor
 @RequestMapping("/users")
 public class UserController {
     private final UserService userService;
     private final RoleService roleService;
 
-    public UserController(UserService userService, RoleService roleService) {
-        this.userService = userService;
-        this.roleService = roleService;
+    @GetMapping("/create")
+    public String create(Model model) {
+        User newUser = new User();
+        model.addAttribute("user", newUser);
+        List<Role> allRoles = roleService.getAll();
+        model.addAttribute("roles", allRoles);
+        return "create-user";
     }
 
-    //    @GetMapping("/create")
-//    public String create(//add needed parameters) {
-//        //ToDo
-//        return " ";
-//    }
-//
-//    @PostMapping("/create")
-//    public String create(//add needed parameters) {
-//        //ToDo
-//        return " ";
-//    }
-//
+    @PostMapping("/create")
+    public String create(@Valid @ModelAttribute("user") User newUser, BindingResult bindingResult, Model model) {
+        if (bindingResult.hasErrors()) {
+            model.addAttribute("constraintViolations", bindingResult.getFieldErrors());
+            List<Role> allRoles = roleService.getAll();
+            model.addAttribute("roles", allRoles);
+            return "create-user";
+        }
+        userService.create(newUser);
+        return "redirect:/todos/all/users/" + newUser.getId();
+    }
+
     @GetMapping("/{id}/read")
     public String read(@PathVariable("id") long id, Model model) {
         User user = userService.readById(id);
@@ -51,7 +57,6 @@ public class UserController {
         List<Role> allRoles = roleService.getAll();
         model.addAttribute("roles", allRoles);
         return "update-user";
-
     }
 
     @PostMapping("/{id}/update")
@@ -73,10 +78,12 @@ public class UserController {
         return "redirect:/home";
     }
 
-//
-//    @GetMapping("/all")
-//    public String getAll(//add needed parameters) {
-//        //ToDo
-//        return " ";
-//    }
+    @GetMapping("/all")
+    public String getAll(Model model) {
+        List<User> users = userService.getAll();
+        model.addAttribute("users", users);
+        List<Role> allRoles = roleService.getAll();
+        model.addAttribute("roles", allRoles);
+        return "home";
+    }
 }

@@ -1,10 +1,173 @@
-<!DOCTYPE html>
+<!doctype html>
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>All Tasks of ToDo List</title>
+    <meta charset="UTF-8" />
+    <title>Home page</title>
+    <link rel="stylesheet" th:href="@{/styles/main.css}" />
 </head>
-<body>
 
+<body>
+<div class="container">
+    <header>
+        <div class="header-container">
+            <div th:replace="header :: header"></div>
+            <div class="header-home">
+                <a th:href="@{'/tasks/create/todos/'+${todo.getId()}}" role="button"
+                >Create Task</a
+                >
+            </div>
+        </div>
+    </header>
+    <div class="users-list">
+        <div class="text" th:if="${not #lists.isEmpty(tasks)}">
+            <div
+                    th:text="'All Tasks From ' + ${todo.getOwner().getLastName()} + ' ' + ${todo.getTitle()}"
+            ></div>
+        </div>
+        <table class="table">
+            <thead>
+            <tr th:if="${not #lists.isEmpty(tasks)}" scope="row">
+                <th scope="col">No.</th>
+                <th scope="col">Id</th>
+                <th scope="col">Name</th>
+                <th scope="col">Priority</th>
+                <th scope="col">State</th>
+                <th colspan="2" scope="col">Operations</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:if="${#lists.isEmpty(tasks)}">
+                <td colspan="6">
+                    <a class="action-link" th:href="@{'/'}">
+                        <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                width="76px"
+                                height="76x"
+                                viewBox="0 0 24 24"
+                                fill="none"
+                        >
+                            <g id="SVGRepo_bgCarrier" stroke-width="0" />
+
+                            <g
+                                    id="SVGRepo_tracerCarrier"
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                            />
+
+                            <g id="SVGRepo_iconCarrier">
+                                <path
+                                        d="M16.5 21V17.5276C16.5 16.6257 17.1036 15.8354 17.9738 15.5981L21.1644 14.7279C21.6578 14.5933 22 14.1453 22 13.6339C22 13.0077 21.4923 12.5 20.8661 12.5H3.14677C2.51343 12.5 2 13.0134 2 13.6468C2 14.1532 2.33218 14.5997 2.81725 14.7452L5.5747 15.5724C6.42066 15.8262 7 16.6048 7 17.4881V19M21.5 8L19.5 6M21.5 8L19.5 10.2592M21.5 8H18M2 8L4 6M2 8L4 10.2592M2 8H5.5M16 6.5C16 8.70914 14.2091 10.5 12 10.5C9.79086 10.5 8 8.70914 8 6.5C8 4.29086 9.79086 2.5 12 2.5C14.2091 2.5 16 4.29086 16 6.5Z"
+                                        stroke="grey"
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                        stroke-width="1.4"
+                                />
+                            </g>
+                        </svg>
+                        <div class="text">No tasks found</div>
+                    </a>
+                </td>
+            </tr>
+            <tr
+                    scope="row"
+                    th:each="task, state : ${tasks}"
+                    th:class="${'priority-' + task.getPriority()}"
+            >
+                <td><b th:text="${state.count}"></b></td>
+                <td th:text="${task.getId()}"></td>
+
+                <td>
+                    <a th:text="${task.getName()}"></a>
+                </td>
+                <td th:text="${task.getPriority()}"></td>
+                <td th:text="${task.getState().getName()}"></td>
+                <td>
+                    <a
+                            class="action-link"
+                            th:href="@{'/tasks/'+${task.getId()}+'/update/todos/'+${todo.getId()}}"
+                    >
+                        <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                fill="currentColor"
+                                width="21px"
+                                height="21px"
+                                viewBox="0 0 23 21"
+                        >
+                            <path
+                                    d="M2,21H8a1,1,0,0,0,0-2H3.071A7.011,7.011,0,0,1,10,13a5.044,5.044,0,1,0-3.377-1.337A9.01,9.01,0,0,0,1,20,1,1,0,0,0,2,21ZM10,5A3,3,0,1,1,7,8,3,3,0,0,1,10,5ZM20.207,9.293a1,1,0,0,0-1.414,0l-6.25,6.25a1.011,1.011,0,0,0-.241.391l-1.25,3.75A1,1,0,0,0,12,21a1.014,1.014,0,0,0,.316-.051l3.75-1.25a1,1,0,0,0,.391-.242l6.25-6.25a1,1,0,0,0,0-1.414Zm-5,8.583-1.629.543.543-1.629L19.5,11.414,20.586,12.5Z"
+                            />
+                        </svg>
+                    </a>
+                </td>
+                <td>
+                    <a
+                            class="action-link"
+                            th:href="@{'/tasks/'+${task.getId()}+'/delete/todos/'+${todo.getId()}}"
+                    >
+                        <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                fill="currentColor"
+                                width="21px"
+                                height="21px"
+                                viewBox="0 0 23 21"
+                        >
+                            <path
+                                    d="M1,20a1,1,0,0,0,1,1h8a1,1,0,0,0,0-2H3.071A7.011,7.011,0,0,1,10,13a5.044,5.044,0,1,0-3.377-1.337A9.01,9.01,0,0,0,1,20ZM10,5A3,3,0,1,1,7,8,3,3,0,0,1,10,5Zm12.707,9.707L20.414,17l2.293,2.293a1,1,0,1,1-1.414,1.414L19,18.414l-2.293,2.293a1,1,0,0,1-1.414-1.414L17.586,17l-2.293-2.293a1,1,0,0,1,1.414-1.414L19,15.586l2.293-2.293a1,1,0,0,1,1.414,1.414Z"
+                            />
+                        </svg>
+                    </a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+
+        <table th:if="${not #lists.isEmpty(tasks)}" class="table">
+            <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Collaborator</th>
+                <th scope="col">Action</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="collaborator, state : ${collaborators}">
+                <td th:text="${state.index + 1}"></td>
+                <td
+                        th:text="${collaborator.getFirstName() + ' ' + collaborator.getLastName()}"
+                ></td>
+                <td>
+                    <form th:action="@{/deleteCollaborator}" method="post">
+                        <input
+                                type="hidden"
+                                name="collaboratorId"
+                                th:value="${collaborator.id}"
+                        />
+                        <button type="submit">Delete</button>
+                    </form>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+
+        <form
+                action="/addCollaborator"
+                method="post"
+                th:if="${not #lists.isEmpty(tasks)}"
+        >
+            <div>
+                <label for="collaboratorSelect">Select Collaborator:</label>
+                <select id="collaboratorSelect" name="collaborator">
+                    <option
+                            th:each="user : ${users}"
+                            th:value="${user.id}"
+                            th:text="${user.firstName + ' ' + user.lastName}"
+                    ></option>
+                </select>
+                <button type="submit">Add Collaborator</button>
+            </div>
+        </form>
+    </div>
+    <footer></footer>
+</div>
 </body>
 </html>

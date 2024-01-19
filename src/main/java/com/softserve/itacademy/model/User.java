@@ -8,7 +8,7 @@ import java.util.List;
 @Table(name = "users")
 public class User  {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
     @Pattern(regexp = "[A-Z][a-z]+",

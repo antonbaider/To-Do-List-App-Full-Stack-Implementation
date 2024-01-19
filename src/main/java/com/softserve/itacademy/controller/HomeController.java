@@ -27,11 +27,11 @@ public class HomeController {
         model.addAttribute("roles", allRoles);
         return "home";
     }
+
     @GetMapping("/search")
     public String searchUsers(@RequestParam String userName, Model model) {
         List<User> foundUsers = userService.searchUsersByName(userName);
         model.addAttribute("users", foundUsers);
         return "home";
     }
-
 }

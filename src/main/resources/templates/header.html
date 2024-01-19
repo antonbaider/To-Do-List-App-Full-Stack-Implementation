@@ -1,5 +1,11 @@
 <div th:fragment="header">
     <div class="header">
         <a href="/home">ToDo Lists</a>
+        <a href="#" onclick="goBack()">Back</a>
     </div>
+    <script>
+        function goBack() {
+            window.history.back();
+        }
+    </script>
 </div>

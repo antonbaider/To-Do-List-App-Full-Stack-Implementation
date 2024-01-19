@@ -17,21 +17,9 @@
     );
     --select-background: var(--darkgray);
     --select-hover-color: #f39c12;
-    --priority-high-background: linear-gradient(
-            to right,
-            rgba(255, 0, 0, 0.8),
-            rgba(255, 0, 0, 0.5)
-    );
-    --priority-medium-background: linear-gradient(
-            to right,
-            rgba(255, 255, 0, 0.8),
-            rgba(255, 255, 0, 0.5)
-    );
-    --priority-low-background: linear-gradient(
-            to right,
-            rgba(0, 255, 0, 0.8),
-            rgba(0, 255, 0, 0.5)
-    );
+    --priority-high-background: rgba(255, 0, 0, 0.5);
+    --priority-medium-background: rgba(255, 255, 0, 0.5);
+    --priority-low-background: rgba(0, 255, 0, 0.5);
     --boreder-search: #ddd;
     --search-color: #adacac;
     --background-search-color: #ffffff;
