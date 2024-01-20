@@ -3,6 +3,7 @@ package com.softserve.itacademy.model;
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 @Entity
 @Table(name = "tasks")
@@ -12,6 +13,7 @@ public class Task {
     private long id;
 
     @Column(name = "name", nullable = false)
+    @Size(min = 3, message = "Must have at least 3 characters")
     private String name;
 
     @Column(name = "priority")

@@ -8,7 +8,7 @@
 <body>
 <div class="container">
     <div th:replace="header :: header"></div>
-    <div class="text">Create new ToDor</div>
+    <div class="text">Create new ToDo</div>
     <form
             method="POST"
             th:action="@{'/todos/create/users/' + ${owner.getId()}}" th:object="${todo}">

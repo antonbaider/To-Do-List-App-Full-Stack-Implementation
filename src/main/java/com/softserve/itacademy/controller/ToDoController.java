@@ -25,8 +25,7 @@ public class ToDoController {
     private final TaskService taskService;
 
     @GetMapping("/create/users/{owner_id}")
-    public String create(@PathVariable("owner_id") long ownerId,
-                         Model model) {
+    public String create(@PathVariable("owner_id") long ownerId, Model model) {
         User user = userService.readById(ownerId);
         ToDo toDo = new ToDo();
         model.addAttribute("todo", toDo);
@@ -36,10 +35,7 @@ public class ToDoController {
     }
 
     @PostMapping("/create/users/{owner_id}")
-    public String create(@PathVariable("owner_id") long ownerId,
-                         @ModelAttribute("todo") @Valid ToDo toDo,
-                         BindingResult bindingResult,
-                         Model model) {
+    public String create(@PathVariable("owner_id") long ownerId, @ModelAttribute("todo") @Valid ToDo toDo, BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
             model.addAttribute("constraintViolations", bindingResult.getFieldErrors());
             User user = userService.readById(ownerId);
@@ -50,7 +46,7 @@ public class ToDoController {
         }
         User owner = userService.readById(ownerId);
         toDo.setOwner(owner);
-                toDoService.create(toDo);
+        toDoService.create(toDo);
 
         return "redirect:/todos/all/users/" + ownerId;
     }

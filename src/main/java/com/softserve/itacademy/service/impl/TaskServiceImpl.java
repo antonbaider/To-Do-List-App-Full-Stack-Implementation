@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 
 @Service
@@ -25,8 +26,9 @@ public class TaskServiceImpl implements TaskService {
     @Override
     public Task readById(long id) {
         Optional<Task> optional = taskRepository.findById(id);
-            return optional.get();
+        return optional.orElseThrow(() -> new NoSuchElementException("Task not found with id: " + id));
     }
+
 
     @Override
     public Task update(Task task) {

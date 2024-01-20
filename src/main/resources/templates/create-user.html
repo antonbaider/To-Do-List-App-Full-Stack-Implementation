@@ -27,7 +27,7 @@
                 ></li>
             </ul>
         </div>
-
+<br>
         <div class="form-row">
             <div class="input-data">
                 <input
@@ -75,11 +75,10 @@
             <div class="input-data">
                 <input
                         th:field="*{password}"
-                        type="password"
+                        type="text"
                         name="password"
                         id="password"
                         th:value="${user.password}"
-                        th:placeholder="${user.password}"
                         required
                 />
                 <div class="underline"></div>
